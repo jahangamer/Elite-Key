@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ELITE MODS KEY GENERATOR</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Metal+Mania&display=swap" rel="stylesheet">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+:root{
+  --bg:#070713;
+  --neon-cyan:#00f6ff;
+  --neon-pink:#ff00d0;
+  --radius:14px;
+  --mono: 'Share Tech Mono', monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px;
+  background: linear-gradient(180deg,#03030a 0%, #07102a 100%);
+  font-family:var(--mono);
+  color:#e6faff;
+  overflow:auto;
+}
+
+/* ==== UI SAME AS ORIGINAL ==== */
+.container{position:relative; z-index:2; width:min(980px,95%); display:block;}
+.card-header{position:relative; padding:20px; border-radius:var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); box-shadow:0 6px 30px rgba(0,0,0,0.6), 0 0 22px rgba(0,246,255,0.06); backdrop-filter: blur(8px) saturate(140%); margin-bottom:18px;}
+.header-top{display:flex; gap:14px; align-items:center;}
+.logo{width:86px;height:86px;border-radius:50%; background:linear-gradient(135deg,var(--neon-cyan),var(--neon-pink)); display:flex;align-items:center;justify-content:center; font-weight:700;color:#021; font-size:28px; box-shadow:0 0 28px rgba(0,246,255,0.12), 0 0 40px rgba(255,0,208,0.08);}
+.title h1{font-family:'Metal Mania',cursive;font-size:34px;margin:0;color:#fff; text-shadow:0 0 6px var(--neon-cyan)}
+.title p{margin:4px 0 0;color:var(--neon-cyan); letter-spacing:1.5px; font-size:12px}
+
+.hacker-box{position:relative; padding:16px; border-radius:12px; background: linear-gradient(180deg, rgba(12,12,22,0.55), rgba(6,6,12,0.45)); border:1px solid rgba(255,255,255,0.03); box-shadow: 0 8px 30px rgba(2,6,20,0.7); backdrop-filter: blur(8px) saturate(160%); margin-bottom:16px; overflow:hidden;}
+.box-title{font-size:12px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;}
+.muted{ font-size:12px; color:rgba(180,255,255,0.5) }
+.key-output{width:100%; padding:12px; border-radius:8px; border:none; font-family:var(--mono); font-size:16px; margin-top:6px; background: rgba(0,0,0,0.45); color:#0ff; outline:none; box-sizing:border-box; text-align:center; letter-spacing:3px;}
+.panel{ display:flex; flex-direction:column; gap:8px; }
+button{padding:12px 0; width:100%; border:none; border-radius:10px; cursor:pointer; font-weight:800; font-family:var(--mono); margin-top:6px; box-sizing:border-box; font-size:14px; background: linear-gradient(90deg,var(--neon-cyan),var(--neon-pink)); color:#021; box-shadow:0 8px 30px rgba(0,246,255,0.08);}
+button[disabled]{opacity:0.5; cursor:not-allowed;}
+.copy-btn, .generate-btn, .telegram-btn, .youtube-btn{background: linear-gradient(90deg,var(--neon-cyan),var(--neon-pink)); color:#021; width:100%; font-weight:800;}
+.cooldown-line{ margin-top:6px; font-size:13px; color:#ffc3d9; font-weight:700; text-align:center; }
+.terminal{ background:rgba(2,6,12,0.6); border-radius:8px; padding:12px; font-family:var(--mono); font-size:13px; color:#b9ffda; border:1px solid rgba(0,255,140,0.05); box-shadow: inset 0 1px 0 rgba(255,255,255,0.02); overflow:auto; white-space:pre-wrap; line-height:1.45; max-height:160px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card-header">
+    <div class="header-top">
+      <div class="logo">EM</div>
+      <div class="title">
+        <h1>ELITE KEY GEN</h1>
+        <p>[ DEVELOPER: JAHAN CHEATS ]</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hacker-box key-gen">
+    <div class="box-title">
+      <div>KEY GENERATE</div>
+      <div class="muted">Server: <strong>Conected</strong></div>
+    </div>
+
+    <div class="panel">
+      <button class="generate-btn" id="generateBtn">GENERATE KEY</button>
+      <input id="keyOutput" class="key-output" type="text" readonly value="— — — — — — — —">
+      <div id="cooldownInfo" class="cooldown-line" style="display:none"></div>
+      <button class="copy-btn" id="copyBtn">COPY KEY</button>
+      <button class="telegram-btn" id="tgBtn">JOIN TELEGRAM</button>
+      <button class="youtube-btn" id="ytBtn">JOIN YOUTUBE</button>
+    </div>
+  </div>
+
+  <div class="hacker-box">
+    <div class="box-title"><div>SYSTEM LOG</div><div class="muted">live</div></div>
+    <div id="sysLog" class="terminal"></div>
+  </div>
+</div>
+
+<script>
+// FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyBk7fZqKA7OWlB0yXTezNJJqXJvJzpvUu0",
+  authDomain: "key-generator-7b3b3.firebaseapp.com",
+  databaseURL: "https://key-generator-7b3b3-default-rtdb.firebaseio.com",
+  projectId: "key-generator-7b3b3",
+  storageBucket: "key-generator-7b3b3.appspot.com",
+  messagingSenderId: "224805450633",
+  appId: "1:224805450633:android:45bd46a9c5a98e01dd6758"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database().ref('keys');
+
+// UI ELEMENTS
+const generateBtn = document.getElementById('generateBtn');
+const keyOutput = document.getElementById('keyOutput');
+const copyBtn = document.getElementById('copyBtn');
+const tgBtn = document.getElementById('tgBtn');
+const ytBtn = document.getElementById('ytBtn');
+const cooldownInfo = document.getElementById('cooldownInfo');
+const sysLogEl = document.getElementById('sysLog');
+
+// SETTINGS
+const COOLDOWN_MS = 30*60*1000; // 30 min
+const STORAGE_KEY = 'jahan_key_info';
+
+// HELPERS
+function timeStamp() {
+    const d = new Date();
+    return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+}
+
+function appendSysLog(text){
+    sysLogEl.textContent = text+'\n'+sysLogEl.textContent;
+}
+
+function saveKeyToStorage(key, ts){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({key, ts}));
+}
+
+function readKeyFromStorage(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    try { return JSON.parse(raw); } catch(e){ return null; }
+}
+
+function remainingMs(ts){
+    return ts + COOLDOWN_MS - Date.now();
+}
+
+function formatRemaining(ms){
+    if(ms<=0) return "Expired";
+    const total = Math.floor(ms/1000);
+    const m = Math.floor(total/60);
+    const s = total%60;
+    return `${m}m ${s}s`;
+}
+
+// REFRESH UI
+function refreshUI(){
+    const info = readKeyFromStorage();
+    if(info && info.key && info.ts){
+        const rem = remainingMs(info.ts);
+        if(rem>0){
+            keyOutput.value = info.key;
+            copyBtn.disabled = false;
+            copyBtn.style.opacity = 1;
+            cooldownInfo.style.display = 'block';
+            cooldownInfo.textContent = `You generated a key — next in ${formatRemaining(rem)}`;
+            generateBtn.disabled = true;
+            generateBtn.style.opacity = 0.6;
+        }else{
+            keyOutput.value = "— — — — — — — —";
+            copyBtn.disabled = true;
+            copyBtn.style.opacity = 0.6;
+            cooldownInfo.style.display = 'none';
+            generateBtn.disabled = false;
+            generateBtn.style.opacity = 1;
+        }
+    }else{
+        keyOutput.value = "— — — — — — — —";
+        copyBtn.disabled = true;
+        copyBtn.style.opacity = 0.6;
+        cooldownInfo.style.display = 'none';
+        generateBtn.disabled = false;
+        generateBtn.style.opacity = 1;
+    }
+}
+
+setInterval(refreshUI, 1000);
+
+// CLAIM KEY FROM FIREBASE
+async function claimKeyFromFirebase(){
+    const info = readKeyFromStorage();
+    if(info && info.ts && remainingMs(info.ts) > 0){
+        alert(`Key already generated! Wait ${formatRemaining(remainingMs(info.ts))}`);
+        return;
+    }
+
+    appendSysLog(`[${timeStamp()}] REQUEST -> fetching keys...`);
+
+    try{
+        const snapshot = await db.once('value');
+        const keys = snapshot.val();
+        if(!keys){
+            appendSysLog(`[${timeStamp()}] NO KEYS AVAILABLE`);
+            alert("No keys available. Contact admin.");
+            return;
+        }
+
+        let claimed = null;
+        for(const k in keys){
+            const obj = keys[k];
+            if(obj && obj.generated !== true && obj.admin_deactivated !== true){
+                claimed = { id: k, key: obj.key || k };
+                break;
+            }
+        }
+
+        if(!claimed){
+            appendSysLog(`[${timeStamp()}] NO USABLE KEYS`);
+            alert("No usable keys right now. Try again later.");
+            return;
+        }
+
+        // mark as generated
+        await db.child(claimed.id).update({ generated:true, generated_at:Date.now() });
+
+        saveKeyToStorage(claimed.key, Date.now());
+        appendSysLog(`[${timeStamp()}] KEY CLAIMED -> ${claimed.key}`);
+        refreshUI();
+    }catch(err){
+        console.error(err);
+        appendSysLog(`[${timeStamp()}] ERROR -> ${err.message || err}`);
+        alert("Error fetching key. Check console.");
+    }
+}
+
+// EVENTS
+generateBtn.addEventListener('click', ()=> claimKeyFromFirebase());
+
+copyBtn.addEventListener('click', ()=>{
+    const info = readKeyFromStorage();
+    if(!info || !info.key) { alert("No key available"); return; }
+    navigator.clipboard.writeText(info.key).then(()=>appendSysLog(`[${timeStamp()}] KEY COPIED -> ${info.key}`))
+    .catch(()=>alert("Copy failed"));
+});
+
+tgBtn.addEventListener('click', ()=>window.open('https://t.me/+faWqIlLetac4OTU1','_blank'));
+ytBtn.addEventListener('click', ()=>window.open('https://youtube.com/@jahancheats','_blank'));
+
+const sysLines = [
+  "[00:01] INIT ... OK",
+  "[00:02] SECURE TUNNEL ESTABLISHED",
+  "[00:05] SERVER -> ONLINE"
+];
+
+let sysIdx = 0;
+
+function typeSysLine(line, cb) {
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i <= line.length) {
+      const partial = line.slice(0, i) + (i % 2 === 0 ? '|' : '');
+      sysLogEl.textContent = partial + '\n' + sysLogEl.textContent;
+      i++;
+    } else {
+      clearInterval(interval);
+      sysLogEl.textContent = line + '\n' + sysLogEl.textContent;
+      if (cb) cb();
+    }
+  }, 30);
+}
+
+function startSysTyping() {
+  if (sysIdx >= sysLines.length) {
+    // System log loop: প্রতি 1.5 সেকেন্ডে নতুন masked key
+    setInterval(() => {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const first = chars.charAt(Math.floor(Math.random() * chars.length));
+      const last = chars.charAt(Math.floor(Math.random() * chars.length));
+      const maskedKey = `EM-${first}*****${last}`; // JC- prefix + 7 char masked key
+      appendSysLog(`[${timeStamp()}] Generated Key -> ${maskedKey}`);
+    }, 1500);
+    return;
+  }
+  typeSysLine(sysLines[sysIdx], () => {
+    sysIdx++;
+    setTimeout(startSysTyping, 1);
+  });
+}
+
+function appendSysLog(text) {
+  sysLogEl.textContent = text + '\n' + sysLogEl.textContent;
+}
+
+function timeStamp() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+}
+
+// শুরু করো
+startSysTyping();
+
+
+// INIT UI
+refreshUI();
+</script>
+</body>
+</html>
